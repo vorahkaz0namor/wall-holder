@@ -13,11 +13,12 @@ class WallServiceTest {
     }
 
     @Test
-    fun updatePost() {
-        val texts = listOf("One", "Two", "Three", "Four", "Five")
-        for (t in texts)
-            WallService.addPost(Post(fromId = 3, text = t))
-        assertTrue(WallService.updatePost(Post(id = 5, fromId = 3, text = "Last = True")))
-        assertFalse(WallService.updatePost(Post(id = 6, fromId = 3, text = "Last = False")))
+    fun updatePostTrue() {
+        assertTrue(WallService.updatePost(Post(id = 0, fromId = 3, text = "Last = True")))
+    }
+
+    @Test
+    fun updatePostFalse() {
+        assertFalse(WallService.updatePost(Post(id = 1, fromId = 3, text = "Last = False")))
     }
 }
