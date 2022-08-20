@@ -1,4 +1,4 @@
-package ru.netology.social
+package ru.netology
 
 import org.junit.Test
 
