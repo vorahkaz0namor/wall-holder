@@ -1,4 +1,4 @@
-package ru.netology.social
+package ru.netology
 
 fun main() {
     val postI = Post(fromId = 3, text = "Всем привет!")
@@ -8,7 +8,9 @@ fun main() {
 
     WallService.addPost(postI)
     WallService.addPost(postII)
+    println("Добавление постов на стену...\n")
     println(WallService)
     WallService.updatePost(postIUpdate)
-    println(WallService)
+    println("Обновление поста №${postIUpdate.id}...\n")
+    println(postIUpdate)
 }

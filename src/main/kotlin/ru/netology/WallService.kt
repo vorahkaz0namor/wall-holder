@@ -1,4 +1,4 @@
-package ru.netology.social
+package ru.netology
 
 import java.lang.StringBuilder
 
@@ -26,7 +26,8 @@ object WallService {
             canEdit = post.canEdit,
             ownerId = post.ownerId,
             isFavourite = post.isFavourite,
-            likes = post.likes
+            likes = post.likes,
+            attachments = post.attachments
         )
         return true
     }
