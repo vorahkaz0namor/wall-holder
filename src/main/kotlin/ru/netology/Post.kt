@@ -1,5 +1,6 @@
 package ru.netology
 
+import java.lang.StringBuilder
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -15,14 +16,18 @@ data class Post(
     val ownerId: Int? = null,
     val isFavourite: Boolean = false,
     val likes: Likes = Likes(),
-    val attachments: Array<Attachment>? = null
+    val attachments: Array<Attachment> = emptyArray()
 ) {
     private val DEFAULT_TIME_FORMAT =
         DateTimeFormatter.ofPattern("HH:mm:ss, dd.MM.yyyy")
+    var attachmentId = 0
 
     override fun toString(): String {
         fun yesNo(mean: Boolean) = if (mean) "Да" else "Нет"
-        return """Запись №$id:
+        val attachmentsToString = StringBuilder()
+        for (att in attachments)
+            attachmentsToString.append(att).append("\n   ")
+        return """ПОСТ №${id + 1}:
             |Разместил пользователь №$fromId
             |Время публикации - ${dateTime.format(DEFAULT_TIME_FORMAT)}
             |Содержание: '$text'
@@ -32,6 +37,8 @@ data class Post(
             |Владелец - пользователь №${ownerId ?: fromId}
             |Добавлена в закладки - ${yesNo(isFavourite)}
             |Количество лайков - $likes
+            |Вложения:
+            |   ${if (attachments.isEmpty()) "отсутствуют" else attachmentsToString}
             |""".trimMargin()
     }
 
@@ -43,10 +50,7 @@ data class Post(
 
         if (id != other.id) return false
         if (text != other.text) return false
-        if (attachments != null) {
-            if (other.attachments == null) return false
-            if (!attachments.contentEquals(other.attachments)) return false
-        } else if (other.attachments != null) return false
+        if (!attachments.contentEquals(other.attachments)) return false
 
         return true
     }
