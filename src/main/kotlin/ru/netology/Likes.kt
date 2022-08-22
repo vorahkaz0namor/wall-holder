@@ -1,12 +1,8 @@
 package ru.netology
 
-class Likes {
-    var count = 0
-    var userLikes = false
-    val canLike = true
-    val canPublish = true
-
-    override fun toString(): String {
-        return "$count"
-    }
-}
+data class Likes(
+    var count: Int = 0,
+    var userLikes: Boolean = false,
+    val canLike: Boolean = true,
+    val canPublish: Boolean = true
+) { override fun toString() = "$count" }
