@@ -23,27 +23,12 @@ object WallService {
     fun addAttachment(attachment: Attachment, post: Post) {
         val thisId = post.attachmentId++
         val addAttachment =
-            when (attachment.type) {
-                "Audio" -> {
-                    attachment as Audio
-                    attachment.copy(id = thisId)
-                }
-                "Photo" -> {
-                    attachment as Photo
-                    attachment.copy(id = thisId)
-                }
-                "Video" -> {
-                    attachment as Video
-                    attachment.copy(id = thisId)
-                }
-                "File" -> {
-                    attachment as File
-                    attachment.copy(id = thisId)
-                }
-                else -> {
-                    attachment as Link
-                    attachment.copy(id = thisId)
-                }
+            when (attachment) {
+                is Audio -> attachment.copy(id = thisId)
+                is Photo -> attachment.copy(id = thisId)
+                is Video -> attachment.copy(id = thisId)
+                is File -> attachment.copy(id = thisId)
+                is Link -> attachment.copy(id = thisId)
             }
         postArray[post.id] = postArray[post.id].copy(
             attachments = postArray[post.id].attachments + addAttachment
