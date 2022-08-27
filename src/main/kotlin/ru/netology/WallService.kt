@@ -11,8 +11,12 @@ object WallService {
     private var postNewId = 0
     private var commentNewId = 0
 
-    fun getNewId(): Int {
+    fun getPostNewId(): Int {
         return postNewId
+    }
+
+    fun getCommentNewId(): Int {
+        return commentNewId
     }
 
     fun getPost(postId: Int): Post {
