@@ -24,9 +24,6 @@ data class Post(
 
     override fun toString(): String {
         fun yesNo(mean: Boolean) = if (mean) "Да" else "Нет"
-        val attachmentsToString = StringBuilder()
-        for (att in attachments)
-            attachmentsToString.append(att).append("\n   ")
         return """ПОСТ №${id + 1}:
             |Разместил пользователь №$fromId
             |Время публикации - ${dateTime.format(DEFAULT_TIME_FORMAT)}
@@ -37,8 +34,7 @@ data class Post(
             |Владелец - пользователь №${ownerId ?: fromId}
             |Добавлена в закладки - ${yesNo(isFavourite)}
             |Количество лайков - $likes
-            |Вложения:
-            |   ${if (attachments.isEmpty()) "отсутствуют" else attachmentsToString}
+            |${WallService.allAttachmentsToString(attachments)}
             |""".trimMargin()
     }
 
