@@ -9,7 +9,23 @@ class WallServiceTest {
     @Test
     fun addPost() {
         WallService.addPost(Post(fromId = 2, text = "Zero"))
-        assertTrue(WallService.getNewId() != 0)
+        assertTrue(WallService.getPostNewId() != 0)
+    }
+
+    @Test
+    fun addComment() {
+        WallService.addComment(0, Comment(fromId = 2))
+        assertTrue(WallService.getCommentNewId() != 0)
+    }
+
+    @Test(expected = PostNotFoundException::class)
+    fun postNotFoundException() {
+        WallService.addComment(88, Comment(fromId = 2))
+    }
+
+    @Test(expected = InvalidClassException::class)
+    fun invalidClassException() {
+        WallService.addAttachment(File(), "Comment")
     }
 
     @Test
