@@ -21,13 +21,21 @@ fun main() {
     print(WallService.getPost(1))
 
     println("ДОБАВЛЕНИЕ КОММЕНТАРИЕВ К ПОСТАМ...\n")
+    val commentSecond = Comment(fromId = 8)
     Thread.sleep(1000)
     println(WallService.addComment(postI.id, commentFirst))
     Thread.sleep(1000)
-    val commentSecond = Comment(fromId = 8)
     WallService.addComment(postIIUpdate.id, commentSecond)
     WallService.addAttachment(photo, WallService.getComment(1))
     print(WallService.getComment(1))
+
+    println("ДОБАВЛЕНИЕ ЖАЛОБ К КОММЕНТАРИЯМ...\n")
     Thread.sleep(1000)
-    println(WallService.addComment(87, commentSecond))
+    val commentThird = Comment(fromId = 900, text = """
+        |ТОЛЬКО СЕГОДНЯ!!!
+        |Ипотека по выгодной ставке - от 5% годовых!
+        """.trimMargin())
+    WallService.addComment(postI.id, commentThird)
+    println(WallService.getComment(2))
+    print(WallService.addComplaintToComment(WallService.getComment(2), 0))
 }

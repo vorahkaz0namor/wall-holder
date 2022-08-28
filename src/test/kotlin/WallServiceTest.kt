@@ -23,6 +23,24 @@ class WallServiceTest {
         WallService.addComment(88, Comment(fromId = 2))
     }
 
+    @Test(expected = CommentNotFoundException::class)
+    fun commentNotFoundException() {
+        WallService.addComplaintToComment(Comment(id = 2, fromId = 4), 0)
+    }
+
+    @Test(expected = ReasonNotFoundException::class)
+    fun reasonNotFoundException() {
+        WallService.addComment(0, Comment(fromId = 2))
+        WallService.addComplaintToComment(Comment(id = 0, fromId = 5), 8)
+    }
+
+    @Test
+    fun addComplaintToComment() {
+        val startSize = WallService.getComplaintsArraySize()
+        WallService.addComplaintToComment(Comment(fromId = 7), 0)
+        assertTrue(WallService.getComplaintsArraySize() != startSize)
+    }
+
     @Test(expected = InvalidClassException::class)
     fun invalidClassException() {
         WallService.addAttachment(File(), "Comment")
