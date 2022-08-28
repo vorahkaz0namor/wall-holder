@@ -1,6 +1,5 @@
 package ru.netology
 
-import java.lang.StringBuilder
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -35,7 +34,7 @@ data class Post(
             |Добавлена в закладки - ${yesNo(isFavourite)}
             |Количество лайков - $likes
             |${WallService.allAttachmentsToString(attachments)}
-            |""".trimMargin()
+            """.trimMargin()
     }
 
     override fun equals(other: Any?): Boolean {

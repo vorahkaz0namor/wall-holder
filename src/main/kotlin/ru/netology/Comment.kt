@@ -38,6 +38,6 @@ data class Comment(
             |Разместил пользователь №$fromId
             |Время публикации - ${date.format(DEFAULT_TIME_FORMAT)}
             |${WallService.allAttachmentsToString(attachments)}
-            |""".trimMargin()
+            """.trimMargin()
     }
 }

@@ -3,11 +3,25 @@ package ru.netology
 import java.lang.StringBuilder
 
 class PostNotFoundException(message: String) : ArrayIndexOutOfBoundsException(message)
+class CommentNotFoundException(message: String) : ArrayIndexOutOfBoundsException(message)
+class ReasonNotFoundException(message: String) : ArrayIndexOutOfBoundsException(message)
 class InvalidClassException(message: String) : ClassCastException(message)
 
 object WallService {
     private var postArray = emptyArray<Post>()
     private var commentsArray = emptyArray<Comment>()
+    private var complaintsToComment = emptyArray<ComplaintToComment>()
+    private val complaintReasons: HashMap<Int, String> =
+        HashMap(mapOf(
+            Pair(0, "спам"),
+            Pair(1, "детская порнография"),
+            Pair(2, "экстремизм"),
+            Pair(3, "насилие"),
+            Pair(4, "пропаганда наркотиков"),
+            Pair(5, "материал для взрослых"),
+            Pair(6, "оскорбление"),
+            Pair(7, "призывы к суициду")
+        ))
     private var postNewId = 0
     private var commentNewId = 0
 
@@ -17,6 +31,10 @@ object WallService {
 
     fun getCommentNewId(): Int {
         return commentNewId
+    }
+
+    fun getComplaintsArraySize(): Int {
+        return complaintsToComment.size
     }
 
     fun getPost(postId: Int): Post {
@@ -39,6 +57,19 @@ object WallService {
         val thisId = commentNewId++
         commentsArray += comment.copy(id = thisId, toPostId = postId)
         return commentsArray[thisId]
+    }
+
+    fun addComplaintToComment(comment: Comment, reasonId: Int): ComplaintToComment {
+        if (commentsArray.getOrNull(comment.id) == null)
+            throw CommentNotFoundException("Отсутствует комментарий с номером №${comment.id}")
+        if (reasonId !in 0..7)
+            throw ReasonNotFoundException("""
+                |Для комментария №${comment.id} некорректно указана причина жалобы, 
+                |либо указанная причина не классифицируется как жалоба.
+                |""".trimMargin())
+        val complaint = ComplaintToComment(comment.fromId, comment.id, complaintReasons[reasonId])
+        complaintsToComment += complaint
+        return complaint
     }
 
     fun addAttachment(attachment: Attachment, obj: Any) {
